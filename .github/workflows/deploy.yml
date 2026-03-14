@@ -43,4 +43,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/ubuntu/portfolio-deploy/
+            sudo docker rm -f portfolio-api-server
             sudo docker-compose up -d --build portfolio-api
