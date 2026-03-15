@@ -42,6 +42,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            set -e
             cd /home/ubuntu/portfolio-deploy/
             sudo docker-compose stop portfolio-api
             sudo docker-compose rm -f portfolio-api
