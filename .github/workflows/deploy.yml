@@ -46,5 +46,5 @@ jobs:
             cd /home/ubuntu/portfolio-deploy/
             sudo docker-compose stop portfolio-api
             sudo docker-compose rm -f portfolio-api
-            sudo docker-compose up -d --build --force-recreate portfolio-api
+            sudo docker-compose up -d --build --force-recreate --no-deps portfolio-api
             sudo docker image prune -f
