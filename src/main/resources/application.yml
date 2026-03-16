@@ -42,4 +42,4 @@ server:
 api:
   security:
     token:
-      secret: "portifolio-adriann"
+      secret: ${JWT_SECRET:portifolio-adriann

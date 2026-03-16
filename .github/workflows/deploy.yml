@@ -49,5 +49,5 @@ jobs:
 
             sudo docker stop portfolio-api-server || true
             sudo docker rm portfolio-api-server || true
-            sudo docker-compose up -d --build --force-recreate --no-deps portfolio-api
+            sudo docker-compose up -d --build --no-deps portfolio-api
             sudo docker image prune -f
