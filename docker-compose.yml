@@ -15,6 +15,27 @@ services:
       - portfolio_pg_data:/var/lib/postgresql/data
     networks:
       - portfolio-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d portfolio_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  portfolio-api:
+    build: .
+    container_name: portfolio-api-server
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres-portfolio:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-portfolio-db:5432/portfolio_db
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+    networks:
+      - portfolio-network
 
 volumes:
   portfolio_pg_data:

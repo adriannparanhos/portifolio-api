@@ -33,12 +33,16 @@ public class TokenService {
     public String validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.require(algorithm)
+            System.out.println("🔐 Secret usada para validar: '" + secret + "'");
+            String subject = JWT.require(algorithm)
                     .withIssuer("portfolio-api")
                     .build()
                     .verify(token)
                     .getSubject();
+            System.out.println("✅ Token válido, subject: " + subject);
+            return subject;
         } catch (JWTVerificationException exception){
+            System.out.println("❌ Token inválido: " + exception.getMessage());
             return "";
         }
     }
