@@ -45,16 +45,9 @@ jobs:
             set -e
             cd /home/ubuntu/portfolio-deploy/
 
-            # Garantir que o Dockerfile está correto
-            cat > Dockerfile << 'DOCKERFILE'
-            FROM eclipse-temurin:21-jre-alpine
-            WORKDIR /app
-            COPY portifolio-api-0.0.1-SNAPSHOT.jar app.jar
-            EXPOSE 8080
-            ENTRYPOINT ["java", "-jar", "-Dapi.security.token.secret=portifolio-adriann", "app.jar"]
-            DOCKERFILE
+            printf 'FROM eclipse-temurin:21-jre-alpine\nWORKDIR /app\nCOPY portifolio-api-0.0.1-SNAPSHOT.jar app.jar\nEXPOSE 8080\nENTRYPOINT ["java", "-jar", "-Dapi.security.token.secret=portifolio-adriann", "app.jar"]\n' > Dockerfile
 
-            sudo docker-compose stop portfolio-api
-            sudo docker-compose rm -f portfolio-api
-            sudo docker-compose up -d --build --force-recreate portfolio-api
+            sudo docker stop portfolio-api-server || true
+            sudo docker rm portfolio-api-server || true
+            sudo docker-compose up -d --build --force-recreate --no-deps portfolio-api
             sudo docker image prune -f
